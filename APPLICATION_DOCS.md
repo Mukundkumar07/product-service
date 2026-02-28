@@ -33,6 +33,15 @@ The application follows a standard layered architecture:
   }
   ```
 - **Response**: `201 Created`
+- **Response Body**: `ProductResponse`
+  ```json
+  {
+    "id": "60d5ec...",
+    "name": "Coffee Maker",
+    "description": "High-quality espresso machine",
+    "price": 1200.00
+  }
+  ```
 
 ### 2. Get All Products
 - **URL**: `/api/product`

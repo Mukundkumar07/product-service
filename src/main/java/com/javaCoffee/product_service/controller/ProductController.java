@@ -30,12 +30,13 @@ public class ProductController {
      * Maps to POST /api/product
      * 
      * @param productRequest The DTO containing product details to be created.
+     * @return The created ProductResponse.
      */
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED) // Returns 201 Created status upon successful execution
-    public void createProduct(@RequestBody ProductRequest productRequest) {
+    public ProductResponse createProduct(@RequestBody ProductRequest productRequest) {
         log.info("Received request to create product: {}", productRequest.getName());
-        productService.createProduct(productRequest);
+        return productService.createProduct(productRequest);
     }
 
     /**

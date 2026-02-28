@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import java.util.Objects;
+
 /**
  * Service class for handling Product business logic.
  * Interacts with the ProductRepository to perform CRUD operations.
@@ -26,8 +28,9 @@ public class ProductService {
    * 
    * @param productRequest DTO containing name, description, and price of the
    *                       product.
+   * @return The created ProductResponse DTO.
    */
-  public void createProduct(ProductRequest productRequest) {
+  public ProductResponse createProduct(ProductRequest productRequest) {
     // Map DTO to Model using Builder pattern
     Product product = Product.builder()
         .name(productRequest.getName())
@@ -35,9 +38,11 @@ public class ProductService {
         .price(productRequest.getPrice())
         .build();
 
-    // Persist product to database
-    productRepository.save(product);
-    log.info("Product created successfully with ID: {}", product.getId());
+    // Persist product to database and capture the returned entity with its ID
+    Product savedProduct = productRepository.save(Objects.requireNonNull(product));
+    log.info("Product created successfully with ID: {}", savedProduct.getId());
+
+    return mapToProductResponse(savedProduct);
   }
 
   /**
