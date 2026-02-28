@@ -2,6 +2,9 @@ package com.javaCoffee.product_service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaCoffee.product_service.dto.ProductRequest;
+import com.javaCoffee.product_service.repository.ProductRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,9 +43,17 @@ class ProductServiceApplicationTests {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@Autowired
+	private ProductRepository productRepository;
+
 	@DynamicPropertySource
 	static void setProperties(DynamicPropertyRegistry dynamicPropertyRegistry) {
 		dynamicPropertyRegistry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
+	}
+
+	@BeforeEach
+	void setup() {
+		productRepository.deleteAll();
 	}
 
 	@Test
@@ -58,6 +69,7 @@ class ProductServiceApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(productRequestJson))
 				.andExpect(status().isCreated());
+		Assertions.assertEquals(1, productRepository.count());
 	}
 
 	private ProductRequest getProductRequest() {
