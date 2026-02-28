@@ -61,6 +61,16 @@ public class ProductService {
   }
 
   /**
+   * Deletes a product by its ID.
+   * 
+   * @param id The ID of the product to delete.
+   */
+  public void deleteProduct(String id) {
+    log.info("Deleting product with ID: {}", id);
+    productRepository.deleteById(id);
+  }
+
+  /**
    * Helper method to map a Product entity to a ProductResponse DTO.
    * 
    * @param product The Product entity to map.

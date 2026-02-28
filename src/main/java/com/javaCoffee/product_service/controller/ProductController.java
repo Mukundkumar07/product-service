@@ -51,4 +51,17 @@ public class ProductController {
         log.info("Received request to fetch all products");
         return productService.getAllProducts();
     }
+
+    /**
+     * Endpoint to delete a product.
+     * Maps to DELETE /api/product/{id}
+     * 
+     * @param id The ID of the product to delete.
+     */
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT) // Returns 204 No Content status upon successful execution
+    public void deleteProduct(@PathVariable String id) {
+        log.info("Received request to delete product with ID: {}", id);
+        productService.deleteProduct(id);
+    }
 }

@@ -1,23 +1,27 @@
 # Product Service Application Documentation
 
 ## Overview
-The **Product Service** is a microservice built using Spring Boot and MongoDB. It provides a RESTful interface to manage products, including functionality for creating new products and retrieving all existing products.
+The **Product Service** is a full-stack application built using a Spring Boot backend and a modern React frontend. It provides a luxurious interface to manage artisan products, with a real-time connection to a MongoDB database.
 
 ## Technology Stack
+
+### Backend
 - **Framework**: Spring Boot 3.5.11
 - **Language**: Java 17
 - **Database**: MongoDB (NoSQL)
-- **Utilities**: 
-  - **Lombok**: For boilerplate code reduction (Getters, Setters, Builders, etc.)
-  - **SLF4J/Logback**: For application logging.
-- **Build Tool**: Maven
+- **Testing**: Testcontainers (MongoDB), JUnit 5, MockMvc
+
+### Frontend
+- **Framework**: React 18 (via Vite)
+- **Styling**: Vanilla CSS (Custom Glassmorphic Design System)
+- **State Management**: React Hooks (useState, useEffect)
+- **API Client**: Axios
+- **Icons**: Lucide React
 
 ## Architecture
-The application follows a standard layered architecture:
-1.  **Controller Layer**: Handles HTTP requests and interacts with the Service layer.
-2.  **Service Layer**: Contains business logic and orchestrates data Flow between DTOs and Entities.
-3.  **Repository Layer**: Manages data persistence using Spring Data MongoDB.
-4.  **Model/DTO Layer**: Defines the data structure for persistence (Entities) and communication (DTOs).
+- **Backend**: Standard layered architecture (Controller -> Service -> Repository).
+- **Frontend**: Component-based React architecture with a responsive, premium grid view.
+- **Integration**: CORS-enabled REST API communication.
 
 ## API Endpoints
 
@@ -25,54 +29,33 @@ The application follows a standard layered architecture:
 - **URL**: `/api/product`
 - **Method**: `POST`
 - **Request Body**: `ProductRequest`
-  ```json
-  {
-    "name": "Coffee Maker",
-    "description": "High-quality espresso machine",
-    "price": 1200.00
-  }
-  ```
 - **Response**: `201 Created`
-- **Response Body**: `ProductResponse`
-  ```json
-  {
-    "id": "60d5ec...",
-    "name": "Coffee Maker",
-    "description": "High-quality espresso machine",
-    "price": 1200.00
-  }
-  ```
 
 ### 2. Get All Products
 - **URL**: `/api/product`
 - **Method**: `GET`
 - **Response**: `200 OK`
-- **Response Body**: List of `ProductResponse`
-  ```json
-  [
-    {
-      "id": "60d5ec...",
-      "name": "Coffee Maker",
-      "description": "High-quality espresso machine",
-      "price": 1200.00
-    }
-  ]
-  ```
-
-## Configuration
-The application connectivity to MongoDB is configured in `src/main/resources/application.properties`:
-```properties
-spring.data.mongodb.uri=mongodb://localhost:27017/product-service
-```
 
 ## How to Run
-1.  Ensure MongoDB is running locally on port `27017`.
-2.  Run the application using Maven:
-    ```bash
-    mvn spring-boot:run
-    ```
-3.  Or build and run the JAR:
-    ```bash
-    mvn clean package
-    java -jar target/product-service-0.0.1-SNAPSHOT.jar
-    ```
+
+### 1. Start the Backend
+- Ensure MongoDB is running on port `27017`.
+- Run from the root directory:
+  ```bash
+  ./mvnw spring-boot:run
+  ```
+
+### 2. Start the Frontend
+- Navigate to the frontend directory:
+  ```bash
+  cd frontend
+  npm install
+  npm run dev
+  ```
+- Open your browser at **http://localhost:5173**.
+
+## Design Features
+- **Modern Glassmorphism**: Cards and panels feature frosted glass effects.
+- **Premium Aesthetics**: Gold-accented dark theme tailored for high-end boutique experiences.
+- **Dynamic Animations**: Smooth hover transitions and sliding modal entry for product creation.
+- **Responsive Layout**: Designed to look stunning on all screen sizes.
