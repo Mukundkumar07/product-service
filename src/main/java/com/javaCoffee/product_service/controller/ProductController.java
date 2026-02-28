@@ -16,10 +16,10 @@ import java.util.List;
  * Provides endpoints for creating and retrieving products.
  */
 @RestController
-@RequiredArgsConstructor // Automatically generates a constructor for final fields (Constructor
-                         // Injection)
+@RequiredArgsConstructor
 @RequestMapping("/api/product")
-@Slf4j // Enables SLF4J logging
+@Slf4j
+@CrossOrigin // Enabling CORS for local frontend development
 public class ProductController {
 
     // Injecting ProductService to handle business logic
