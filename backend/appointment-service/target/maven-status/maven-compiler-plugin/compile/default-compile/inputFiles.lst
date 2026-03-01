@@ -1,0 +1,7 @@
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/model/Appointment.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/AppointmentApplication.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/dto/DoctorResponse.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/controller/AppointmentController.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/service/AppointmentService.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/repository/AppointmentRepository.java
+/Users/mukundkumar/JavaCoffee-Springboot/product-service/MyArogya/appointment-service/src/main/java/com/arogya/appointment/client/DoctorClient.java

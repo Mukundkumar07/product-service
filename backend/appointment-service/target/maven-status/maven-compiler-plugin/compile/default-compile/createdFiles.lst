@@ -1,0 +1,7 @@
+com/arogya/appointment/client/DoctorClient.class
+com/arogya/appointment/dto/DoctorResponse.class
+com/arogya/appointment/repository/AppointmentRepository.class
+com/arogya/appointment/AppointmentApplication.class
+com/arogya/appointment/service/AppointmentService.class
+com/arogya/appointment/controller/AppointmentController.class
+com/arogya/appointment/model/Appointment.class

@@ -1,0 +1,5 @@
+com/arogya/doctor/service/DoctorService.class
+com/arogya/doctor/repository/DoctorRepository.class
+com/arogya/doctor/controller/DoctorController.class
+com/arogya/doctor/DoctorApplication.class
+com/arogya/doctor/model/Doctor.class

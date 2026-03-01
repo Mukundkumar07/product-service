@@ -1,0 +1,156 @@
+version: '3.8'
+
+services:
+  eureka-server:
+    build:
+      context: ./backend/eureka-server
+    image: mukundkumar007/myarogya-eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+    image: mukundkumar007/myarogya-api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  postgres-auth:
+    image: postgres:15
+    container_name: arogya-postgres-auth
+    environment:
+      POSTGRES_DB: arogya_auth
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  postgres-doctor:
+    image: postgres:15
+    container_name: arogya-postgres-doctor
+    environment:
+      POSTGRES_DB: arogya_doctor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5437:5432"
+
+  postgres-appointment:
+    image: postgres:15
+    container_name: arogya-postgres-appointment
+    environment:
+      POSTGRES_DB: arogya_appointment
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+
+  redis:
+    image: redis:7
+    container_name: arogya-redis
+    ports:
+      - "6379:6379"
+
+  auth-service:
+    build:
+      context: ./backend/auth-service
+    image: mukundkumar007/myarogya-auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-auth
+      - redis
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth:5432/arogya_auth
+      SPRING_DATA_REDIS_HOST: redis
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  doctor-service:
+    build:
+      context: ./backend/doctor-service
+    image: mukundkumar007/myarogya-doctor-service
+    container_name: doctor-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres-doctor
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-doctor:5432/arogya_doctor
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  appointment-service:
+    build:
+      context: ./backend/appointment-service
+    image: mukundkumar007/myarogya-appointment-service
+    container_name: appointment-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres-appointment
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-appointment:5432/arogya_appointment
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  file-service:
+    build:
+      context: ./backend/file-service
+    image: mukundkumar007/myarogya-file-service
+    container_name: file-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_BUCKET: ${AWS_BUCKET}
+
+  notification-service:
+    build:
+      context: ./backend/notification-service
+    image: mukundkumar007/myarogya-notification-service
+    container_name: notification-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+
+  payment-service:
+    build:
+      context: ./backend/payment-service
+    image: mukundkumar007/myarogya-payment-service
+    container_name: payment-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      RAZORPAY_KEY: ${RAZORPAY_KEY}
+      RAZORPAY_SECRET: ${RAZORPAY_SECRET}
+
+  ai-service:
+    build:
+      context: ./backend/ai-service
+    image: mukundkumar007/myarogya-ai-service
+    container_name: ai-service
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
